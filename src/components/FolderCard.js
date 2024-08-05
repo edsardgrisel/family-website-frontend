@@ -2,7 +2,7 @@ import React from "react";
 
 export default function FolderCard({ folder }) {
     const handleClick = () => {
-        window.location.href = "https://www.google.com";
+        window.location.href = "/folders/" + folder.id;
     };
 
     const cardStyle = {
@@ -12,6 +12,7 @@ export default function FolderCard({ folder }) {
         margin: "10px",
         boxSizing: "border-box",
         textAlign: "center",
+        width: "200px",
         flex: "1 1 30%",
         transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition for hover effects
         cursor: "pointer", // Changes cursor to pointer on hover
@@ -50,7 +51,7 @@ export default function FolderCard({ folder }) {
             onMouseOver={(e) => e.currentTarget.style.transform = hoverStyle.transform}
             onMouseOut={(e) => e.currentTarget.style.transform = "none"}
         >
-            <h4>{folder.title}</h4>
+            <h6 style={{ wordWrap: "break-word", whiteSpace: "normal" }}>{folder.title}</h6>
             <div style={imageContainerStyle}>
                 <img 
                     src={folder.url} 
