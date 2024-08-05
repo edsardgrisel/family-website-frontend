@@ -1,0 +1,35 @@
+/* Container for the horizontal scrollable row */
+.scrollable-row-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent line breaks */
+    padding: 20px; /* Optional padding around the container */
+}
+
+/* Container for the scrollable row items */
+.scrollable-row {
+    display: inline-flex; /* Arrange items in a row */
+    gap: 20px; /* Space between cards */
+}
+
+/* Style each folder card item */
+.scrollable-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
+    padding: 10px;
+    background-color: #ffffff; /* Solid background color */
+}
+
+.scrollable-item.uniform-size {
+    width: 200px; /* Set a fixed width */
+    height: 300px; /* Set a fixed height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 10px;
+}
+

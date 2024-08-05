@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import FolderCard from '../components/FolderCard';
 
 
 
@@ -11,31 +12,58 @@ export default function Home () {
   const [image3, setImage3] = useState({});
   const [image4, setImage4] = useState({});
   const [image5, setImage5] = useState({});
+  const [favImage1, setFavImage1] = useState({});
+  const [favImage2, setFavImage2] = useState({});
+  const [favImage3, setFavImage3] = useState({});
 
-
-  function fetchImage() {
-    setIsLoading(false);
-    return [{ id: 1, url: "images/family-photo-mock.jpg", title: "Image 1", date: "2023-07-29", location: "Sample Location 1" },
-    { id: 2, url: "images/family-photo-mock.jpg", title: "Image 2", date: "2023-07-29", location: "Sample Location 2" },
-    { id: 3, url: "images/family-photo-mock.jpg", title: "Image 3", date: "2023-07-29", location: "Sample Location 3" },
-    { id: 4, url: "images/family-photo-mock.jpg", title: "Image 4", date: "2023-07-29", location: "Sample Location 4" },
-    { id: 5, url: "images/family-photo-mock.jpg", title: "Image 5", date: "2023-07-29", location: "Sample Location 5" }]
-  }
-
-  useEffect(() => {
-    const images = fetchImage();
+  function setHomePhotos(images) {
     setImage1(images[0]);
     setImage2(images[1]);
     setImage3(images[2]);
     setImage4(images[3]);
     setImage5(images[4]);
+    setFavImage1(images[5]);
+    setFavImage2(images[6]);
+    setFavImage3(images[7]);
+  }
+
+
+  function fetchImage() {
+    setIsLoading(false);
+    return [
+      { id: 1, url: "images/family-photo-mock.jpg", title: "Image 1", date: "2023-07-29", location: "Sample Location 1" },
+      { id: 2, url: "images/family-photo-mock.jpg", title: "Image 2", date: "2023-07-29", location: "Sample Location 2" },
+      { id: 3, url: "images/family-photo-mock.jpg", title: "Image 3", date: "2023-07-29", location: "Sample Location 3" },
+      { id: 4, url: "images/family-photo-mock.jpg", title: "Image 4", date: "2023-07-29", location: "Sample Location 4" },
+      { id: 5, url: "images/family-photo-mock.jpg", title: "Image 5", date: "2023-07-29", location: "Sample Location 5" },
+      { id: 6, url: "images/family-photo-mock2.jpg", title: "Summer 2024", date: "2023-07-29", location: "Sample Location 6" },
+      { id: 7, url: "images/family-photo-mock.jpg", title: "Easter 2024", date: "2023-07-29", location: "Sample Location 7" },
+      { id: 8, url: "images/family-photo-mock.jpg", title: "Christmas 2023", date: "2023-07-29", location: "Sample Location 8" }
+    ];
+  }
+
+  useEffect(() => {
+    const images = fetchImage();
+    setHomePhotos(images);
   });
+
+  const footerStyle = {
+    backgroundColor: '#f1f1f1', // Light grey background color
+    textAlign: 'center',
+    padding: '10px',
+    marginTop: 'auto', // Pushes the footer to the bottom of the page
+    borderTop: '1px solid #ddd', // Optional: adds a border at the top of the footer
+    width: '100%',
+    position: 'relative', // Ensures the footer is positioned correctly within its container
+    bottom: '0', // Sticks the footer to the bottom
+};
+
 
   return (
     <div>
 
       {isLoading ? <p>Loading...</p> :
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', border: "10px solid white" }}>
           <div style={{ display: 'flex', flex: 1 }}>
             <div style={{ flex: 1 }}>
               <img src={image1.url} alt={image1.title} style={{ width: '100%', height: '100%' }} />
@@ -61,9 +89,19 @@ export default function Home () {
         </div>
       }
 
-      
+      <div style={{ border: "10px solid white" }}>
+        <h2 style={{ textAlign: 'center' }}>Family Favorites</h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', }}>
+          <FolderCard folder={favImage1} />
+          <FolderCard folder={favImage2} />
+          <FolderCard folder={favImage3} />
+          {/* <FolderCard image={{title: "Discover More Folders", url: "./folders"}} /> */}
+        </div>
+      </div>
 
-
+      <footer style={footerStyle}>
+            <p>This website was created by Edsard Grisel</p>
+      </footer>
 
     </div>
   );
