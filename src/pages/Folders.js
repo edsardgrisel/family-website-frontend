@@ -7,14 +7,14 @@ export default function Folders() {
     const [years, setYears] = React.useState([]);
 
     const folders = [
-        { id: 1, url: "images/family-photo-mock.jpg", title: "Summer", date: "2023-07-29", location: "Sample Location 1" },
-        { id: 2, url: "images/family-photo-mock.jpg", title: "Summer", date: "2022-07-29", location: "Sample Location 2" },
-        { id: 3, url: "images/family-photo-mock.jpg", title: "Summer", date: "2021-07-29", location: "Sample Location 3" },
-        { id: 4, url: "images/family-photo-mock.jpg", title: "New 2020", date: "2020-01-15", location: "Sample Location 4" },
-        { id: 5, url: "images/family-photo-mock.jpg", title: "Summer", date: "2020-01-15", location: "Sample Location 5" },
-        { id: 6, url: "images/family-photo-mock2.jpg", title: "Summer", date: "2024-05-22", location: "Sample Location 6" },
-        { id: 7, url: "images/family-photo-mock.jpg", title: "Easter", date: "2024-04-12", location: "Sample Location 7" },
-        { id: 8, url: "images/family-photo-mock.jpg", title: "Christmas", date: "2023-12-25", location: "Sample Location 8" }
+        { id: 1, url: "/images/family-photo-mock.jpg", title: "Summer", date: "2023-07-29", location: "Sample Location 1" },
+        { id: 2, url: "/images/family-photo-mock.jpg", title: "Summer", date: "2022-07-29", location: "Sample Location 2" },
+        { id: 3, url: "/images/family-photo-mock.jpg", title: "Summer", date: "2021-07-29", location: "Sample Location 3" },
+        { id: 4, url: "/images/family-photo-mock.jpg", title: "New 2020", date: "2020-01-15", location: "Sample Location 4" },
+        { id: 5, url: "/images/family-photo-mock.jpg", title: "Summer", date: "2020-01-15", location: "Sample Location 5" },
+        { id: 6, url: "/images/family-photo-mock2.jpg", title: "Summer", date: "2024-05-22", location: "Sample Location 6" },
+        { id: 7, url: "/images/family-photo-mock.jpg", title: "Easter", date: "2024-04-12", location: "Sample Location 7" },
+        { id: 8, url: "/images/family-photo-mock.jpg", title: "Christmas", date: "2023-12-25", location: "Sample Location 8" }
     ];
 
     function getYears() {
