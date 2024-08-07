@@ -4,7 +4,9 @@ import FolderCard from '../components/FolderCard';
 
 
 
-export default function Home () {
+export default function Home() {
+
+
 
   const [isLoading, setIsLoading] = useState(true);
   const [image1, setImage1] = useState({});
@@ -56,7 +58,7 @@ export default function Home () {
     width: '100%',
     position: 'relative', // Ensures the footer is positioned correctly within its container
     bottom: '0', // Sticks the footer to the bottom
-};
+  };
 
 
   return (
@@ -100,7 +102,7 @@ export default function Home () {
       </div>
 
       <footer style={footerStyle}>
-            <p>This website was created by Edsard Grisel</p>
+        <p>This website was created by Edsard Grisel</p>
       </footer>
 
     </div>
