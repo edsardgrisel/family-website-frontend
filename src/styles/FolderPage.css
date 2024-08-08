@@ -1,0 +1,23 @@
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Adjust the gap between images as needed */
+}
+
+.image-item {
+    width: 30%; /* Set a fixed width for the container */
+    height: 20%; /* Set a fixed height for the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white; /* Adds white space around the image */
+    overflow: hidden; /* Ensures the image doesn't overflow the container */
+}
+
+.image-item img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensures the image maintains its aspect ratio */
+}

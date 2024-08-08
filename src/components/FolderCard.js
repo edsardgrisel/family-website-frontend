@@ -1,8 +1,14 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-export default function FolderCard({ folder }) {
+export default function FolderCard({ folderId }) {
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [folder, setFolder] = useState({});
+
     const handleClick = () => {
-        window.location.href = "/folders/" + folder.id;
+        window.location.href = "/folders/" + folderId;
     };
 
     const cardStyle = {
@@ -43,6 +49,23 @@ export default function FolderCard({ folder }) {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow to highlight
     };
 
+    const fetchAndSetFolder = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/folders/${folderId}`);
+            setFolder(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching photos in folder card:', error);
+        }
+        setIsLoading(false);
+    }
+
+
+
+    useEffect(() => {
+        fetchAndSetFolder();
+    }, []);
+
     return (
         <div
             className="folder-card"
@@ -51,14 +74,19 @@ export default function FolderCard({ folder }) {
             onMouseOver={(e) => e.currentTarget.style.transform = hoverStyle.transform}
             onMouseOut={(e) => e.currentTarget.style.transform = "none"}
         >
-            <h6 style={{ wordWrap: "break-word", whiteSpace: "normal" }}>{folder.title}</h6>
-            <div style={imageContainerStyle}>
-                <img 
-                    src={folder.url} 
-                    alt={folder.title} 
-                    style={imageStyle}
-                />
-            </div>
+            {isLoading ? <p>Loading...</p> :
+                <div>
+                    <h6 style={{ wordWrap: "break-word", whiteSpace: "normal" }}>{folder.title}</h6>
+                    <div style={imageContainerStyle}>
+                        {console.log(folder)}
+                        <img
+                            src={"https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg"}//folder.photos[0].url}
+                            alt={folder.title}
+                            style={imageStyle}
+                        />
+                    </div>
+                </div>
+            }
         </div>
     );
 }

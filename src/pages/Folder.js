@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/FolderPage.css';
 
 export default function Folder() {
     const { id } = useParams();
@@ -33,9 +34,17 @@ export default function Folder() {
             {loading ? (<p>Loading...</p>) : (
                 <div>
                     <h1>{folder.title}</h1>
-                    {folder.photos.map(image => (
-                        <img onError={(e) => console.log(e)} key={image.id} src={image.url} alt={image.url} />
-                    ))}
+                    <div className="image-container">
+                        {folder.photos.map(image => (
+                            <img
+                                onError={(e) => console.log(e)}
+                                key={image.id}
+                                src={image.url}
+                                alt={image.url}
+                                className="image-item" // Apply the CSS class
+                            />
+                        ))}
+                    </div>
                 </div>
             )}
         </div>
