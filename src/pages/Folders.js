@@ -51,7 +51,7 @@ export default function Folders() {
                         <h2>{year}</h2>
                         <div className="scrollable-row">
                             {folders.filter(folder => new Date(folder.startDate).getFullYear() === year).map(folder => (
-                                <FolderCard className="scrollable-item" folder={folder._id} key={folder._id} />
+                                <FolderCard className="scrollable-item" folderId={folder._id} key={folder._id} />
                             ))}
 
                         </div>

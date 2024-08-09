@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import FolderCard from '../components/FolderCard';
 import axios from 'axios';
+import '../styles/FoldersPage.css';
 
 
 
@@ -48,11 +49,13 @@ export default function Home() {
           <div style={{ border: "10px solid white" }}>
             <h2 style={{ textAlign: 'center' }}>Family Favorites</h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', }}>
-              <FolderCard folderId={home.featuredFolders} />
-              <FolderCard folderId={home.featuredFolders} />
-              <FolderCard folderId={home.featuredFolders} />
-
-              {/* <FolderCard image={{title: "Discover More Folders", url: "./folders"}} /> */}
+              <div className="scrollable-row-container">
+                <div className="scrollable-row">
+                  {home.favouriteFolders.map(folderId => (
+                    <FolderCard className="scrollable-item" folderId={folderId} key={folderId} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

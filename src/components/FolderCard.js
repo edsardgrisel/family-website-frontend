@@ -51,11 +51,12 @@ export default function FolderCard({ folderId }) {
 
     const fetchAndSetFolder = async () => {
         try {
+            console.log("folderId: " + folderId);
             const response = await axios.get(`http://localhost:5000/folders/${folderId}`);
             setFolder(response.data);
             console.log(response.data);
         } catch (error) {
-            console.error('Error fetching photos in folder card:', error);
+            console.error(`Error fetching photos in folder card ${folderId}:`, error);
         }
         setIsLoading(false);
     }
@@ -80,7 +81,7 @@ export default function FolderCard({ folderId }) {
                     <div style={imageContainerStyle}>
                         {console.log(folder)}
                         <img
-                            src={"https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg"}//folder.photos[0].url}
+                            src={folder.photos[0].url}
                             alt={folder.title}
                             style={imageStyle}
                         />
