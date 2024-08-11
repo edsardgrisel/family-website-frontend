@@ -46,17 +46,22 @@ export default function Home() {
           <div style={{ flex: 1 }}>
             <img src={home.photoUrl} alt={home.photoUrl} style={{ width: '100%', height: '100%' }} />
           </div>
-          <div style={{ border: "10px solid white" }}>
-            <h2 style={{ textAlign: 'center' }}>Family Favorites</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', }}>
-              <div className="scrollable-row-container">
-                <div className="scrollable-row">
-                  {home.favouriteFolders.map(folderId => (
-                    <FolderCard className="scrollable-item" folderId={folderId} key={folderId} />
-                  ))}
+          <div>
+
+            {home.favouriteFolders && (
+              <div style={{ border: "10px solid white" }}>
+                <h2 style={{ textAlign: 'center' }}>Family Favorites</h2>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', }}>
+                  <div className="scrollable-row-container">
+                    <div className="scrollable-row">
+                      {home.favouriteFolders.map(folderId => (
+                        <FolderCard className="scrollable-item" folderId={folderId} key={folderId} />
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       }

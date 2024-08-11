@@ -22,9 +22,6 @@ const Navbar = () => {
                     <Link to="/folders" style={{ textDecoration: 'none', color: 'black' }}>Folders</Link>
                 </li>
                 <li>
-                    <Link to="/edit" style={{ textDecoration: 'none', color: 'black' }}>Edit</Link>
-                </li>
-                <li>
                     <Button onClick={() => handleLogOut()}>Log out</Button>
                 </li>
             </ul>

@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Folders from './pages/Folders';
 import Folder from './pages/Folder';
-import EditFolders from './pages/EditFolders';
 import EditFolder from './pages/EditFolder';
 
 // ... import other pages
@@ -22,7 +21,6 @@ function App() {
           <Route path="/folders" Component={Folders} />
           <Route path="/folders/:id" Component={Folder} />
           {/* ... other routes */}
-          <Route path="/edit" Component={EditFolders} />
           <Route path="/edit/:id" Component={EditFolder} />
           {/* ... other routes */}
         </Routes>
