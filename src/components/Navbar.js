@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import { Button } from 'react-bootstrap'; // Import Button from react-bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
-const Navbar = () => {
+const Navbar = ({ handleLogout }) => {
 
-    function handleLogOut() {
-        console.log("Log out to be implemented");
-    }
 
     return (
         <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'lightgray', padding: '1rem' }}>
@@ -22,7 +21,7 @@ const Navbar = () => {
                     <Link to="/folders" style={{ textDecoration: 'none', color: 'black' }}>Folders</Link>
                 </li>
                 <li>
-                    <Button onClick={() => handleLogOut()}>Log out</Button>
+                    <Button onClick={handleLogout}>Log Out</Button>
                 </li>
             </ul>
         </nav>

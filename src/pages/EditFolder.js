@@ -74,8 +74,8 @@ export default function EditFolder() {
     return (
         <div style={{ border: '1px solid black', padding: '20px', borderRadius: '5px' }}>
             <h2>{"Edit " + folder.title}</h2>
-            <div>
-                <form onSubmit={handleSubmit}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <form onSubmit={handleSubmit} style={{ width: '70%' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                         <label htmlFor="title">Title:</label>
                         <input type="text" id="title" name="title" value={folder.title} onChange={(e) => setFolder({ ...folder, title: e.target.value })} style={{ width: '30%' }} />
@@ -96,7 +96,8 @@ export default function EditFolder() {
                     <button type="submit">Save</button>
                 </form>
 
-                <form onSubmit={handleAddPhoto}>
+                <form onSubmit={handleAddPhoto} style={{ width: '30%' }}>
+                    <h3>Add Photo</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                         <label htmlFor="url">Url:</label>
                         <input type="text" id="url" value={newPhoto.url} name="url" onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })} style={{ width: '30%' }} />
