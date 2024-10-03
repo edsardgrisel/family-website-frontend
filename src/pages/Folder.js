@@ -70,6 +70,7 @@ export default function Folder() {
                         <Link to={`/edit/${id}`}><CiEdit /></Link>
                         <Button onClick={() => handleDeleteClick()} variant="danger"><RiDeleteBin5Line /></Button>
                     </h1>
+                    <p>{folder.description}</p>
                     <div className="image-container">
                         {folder.photos.map(image => (
                             <img

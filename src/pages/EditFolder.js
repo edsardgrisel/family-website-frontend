@@ -92,6 +92,10 @@ export default function EditFolder() {
                         <label htmlFor="endDate">End Date:</label>
                         <input type="text" id="endDate" name="endDate" value={folder.endDate} onChange={(e) => setFolder({ ...folder, endDate: e.target.value })} style={{ width: '30%' }} />
                     </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                        <label htmlFor="description">Description:</label>
+                        <textarea id="description" name="description" value={folder.description} onChange={(e) => setFolder({ ...folder, description: e.target.value })} style={{ width: '30%' }} />
+                    </div>
 
                     <button type="submit">Save</button>
                 </form>
