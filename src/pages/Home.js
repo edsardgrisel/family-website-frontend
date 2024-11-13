@@ -9,6 +9,7 @@ import '../styles/FoldersPage.css';
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [home, setHome] = useState({});
+  const [favoriteFolders, setFavoriteFolders] = useState([]);
 
   const fetchAndSetHome = async () => {
     try {
@@ -21,10 +22,22 @@ export default function Home() {
     setIsLoading(false);
   }
 
+  const fetchFavorites = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/folders`);
+      const favoriteFolders = response.data.filter(folder => folder.isFavorite);
+      setFavoriteFolders(favoriteFolders);
+    }
+    catch (error) {
+      console.error('Error fetching favorites:', error);
+    }
+  }
+
 
 
   useEffect(() => {
     fetchAndSetHome();
+    fetchFavorites();
   }, []);
 
   const footerStyle = {
@@ -48,14 +61,14 @@ export default function Home() {
           </div>
           <div>
 
-            {home.favouriteFolders && (
+            {favoriteFolders && (
               <div style={{ border: "10px solid white" }}>
                 <h2 style={{ textAlign: 'center' }}>Family Favorites</h2>
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', }}>
                   <div className="scrollable-row-container">
                     <div className="scrollable-row">
-                      {home.favouriteFolders.map(folderId => (
-                        <FolderCard className="scrollable-item" folderId={folderId} key={folderId} />
+                      {favoriteFolders.map(folder => (
+                        <FolderCard className="scrollable-item" folderId={folder._id} key={folder._id} />
                       ))}
                     </div>
                   </div>

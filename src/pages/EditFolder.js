@@ -29,7 +29,11 @@ export default function EditFolder() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:5000/folders/${id}`, folder);
+            const updatedFolder = { ...folder, isFavorite: folder.isFavorite || false };
+            { console.log(updatedFolder.isFavorite) } // this line prints True
+
+            await axios.put(`http://localhost:5000/folders/${id}`, updatedFolder); // this line is not updating the favorite field to True
+
             console.log('Folder updated successfully');
         } catch (error) {
             console.error('Error updating folder:', error);
@@ -95,6 +99,17 @@ export default function EditFolder() {
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                         <label htmlFor="description">Description:</label>
                         <textarea id="description" name="description" value={folder.description} onChange={(e) => setFolder({ ...folder, description: e.target.value })} style={{ width: '30%' }} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                        <label htmlFor="favorite">Favorite:</label>
+                        <input
+                            type="checkbox"
+                            id="favorite"
+                            name="favorite"
+                            checked={folder.isFavorite || false}
+                            onChange={(e) => setFolder({ ...folder, isFavorite: e.target.checked })}
+                            style={{ width: '30%' }}
+                        />
                     </div>
 
                     <button type="submit">Save</button>
