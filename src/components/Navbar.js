@@ -21,6 +21,9 @@ const Navbar = ({ handleLogout }) => {
                     <Link to="/folders" style={{ textDecoration: 'none', color: 'black' }}>Folders</Link>
                 </li>
                 <li>
+                    <Link to="/add-folder" style={{ textDecoration: 'none', color: 'black' }}>Add Folder</Link>
+                </li>
+                <li>
                     <Button onClick={handleLogout}>Log Out</Button>
                 </li>
             </ul>

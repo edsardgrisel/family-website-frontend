@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Folders from './pages/Folders';
 import Folder from './pages/Folder';
 import EditFolder from './pages/EditFolder';
+import AddFolder from "./pages/AddFolder";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -71,6 +72,14 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add-folder"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <AddFolder />
             </ProtectedRoute>
           }
         />
