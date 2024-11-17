@@ -118,15 +118,25 @@ export default function EditFolder() {
                 <form onSubmit={handleAddPhoto} style={{ width: '30%' }}>
                     <h3>Add Photo</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                        <label htmlFor="url">Url:</label>
-                        <input type="text" id="url" value={newPhoto.url} name="url" onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })} style={{ width: '30%' }} />
+                        <label htmlFor="file">Choose a file:</label>
+                        <input
+                            type="file"
+                            id="file"
+                            name="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => {
+                                        setNewPhoto({ ...newPhoto, url: reader.result });
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            }}
+                            style={{ width: '30%' }}
+                        />
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                        <label htmlFor="date">Date (yyyy-mm-dd)</label>
-                        <input type="text" id="date" value={newPhoto.date} name="date" onChange={(e) => setNewPhoto({ ...newPhoto, date: e.target.value })} style={{ width: '30%' }} />
-                    </div>
-
-
                     <button type="submit">Save</button>
                 </form>
             </div>

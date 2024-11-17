@@ -6,33 +6,30 @@ import EditPhotoCard from '../components/EditPhotoCard';
 
 export default function AddFolder() {
     const { id } = useParams();
-    const [folder, setFolder] = useState({});
+    const [folder, setFolder] = useState({
+        title: '',
+        location: '',
+        startDate: '',
+        endDate: '',
+        description: '',
+        isFavorite: false,
+        photos: [],
+    });
     const [loading, setLoading] = useState(true);
-    // This should eventually be an array of photos
-    const [newPhoto, setNewPhoto] = useState({ url: '', date: '' });
 
-    const fetchFolder = async () => {
-        try {
-            const response = await axios.get(`http://localhost:5000/folders/${id}`);
-            setFolder(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error fetching photos:', error);
-        }
-        setLoading(false);
-    }
 
-    useEffect(() => {
-        fetchFolder();
-    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const updatedFolder = { ...folder, isFavorite: folder.isFavorite || false };
-            await axios.put(`http://localhost:5000/folders/${id}`, updatedFolder); // this line is not updating the favorite field to True
+            const response = await axios.post(`http://localhost:5000/folders/`, updatedFolder); // this line is not updating the favorite field to True
 
             console.log('Folder updated successfully');
+            console.log(response.data);
+            if (response.data._id) {
+                window.location.href = `http://localhost:3000/edit/${response.data._id}`;
+            }
         } catch (error) {
             console.error('Error updating folder:', error);
         }
@@ -74,19 +71,6 @@ export default function AddFolder() {
                             style={{ width: '30%' }}
                         />
                     </div>
-                    <h3>Add Photo</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                        <label htmlFor="url">Url:</label>
-                        <input type="text" id="url" value={newPhoto.url} name="url" onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })} style={{ width: '30%' }} />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                        <label htmlFor="date">Date (yyyy-mm-dd)</label>
-                        <input type="text" id="date" value={newPhoto.date} name="date" onChange={(e) => setNewPhoto({ ...newPhoto, date: e.target.value })} style={{ width: '30%' }} />
-                    </div>
-
-
-                    <button type="submit">Save</button>
-
                     <button type="submit">Save</button>
                 </form>
 

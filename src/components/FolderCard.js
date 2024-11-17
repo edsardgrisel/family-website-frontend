@@ -78,14 +78,15 @@ export default function FolderCard({ folderId }) {
             {isLoading || !folder ? <p>Loading...</p> :
                 <div>
                     <h6 style={{ wordWrap: "break-word", whiteSpace: "normal" }}>{folder.title}</h6>
-                    <div style={imageContainerStyle}>
-                        {console.log(folder)}
-                        <img
-                            src={folder.photos[0].url}
-                            alt={folder.title}
-                            style={imageStyle}
-                        />
-                    </div>
+                    {folder.photos.length > 0 && (
+                        <div style={imageContainerStyle}>
+                            <img
+                                src={folder.photos[0].url}
+                                alt={folder.title}
+                                style={imageStyle}
+                            />
+                        </div>
+                    )}
                 </div>
             }
         </div>
