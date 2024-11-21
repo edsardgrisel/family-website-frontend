@@ -25,7 +25,6 @@ export default function Folder() {
         try {
             const response = await axios.get(`http://localhost:5000/folders/${id}`);
             setFolder(response.data);
-            console.log(response.data);
         } catch (error) {
             console.error('Error fetching photos:', error);
         }

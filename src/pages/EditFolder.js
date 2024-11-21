@@ -62,6 +62,8 @@ export default function EditFolder() {
         try {
             const updatedFolder = { ...folder, isFavorite: folder.isFavorite || false };
 
+            console.log('Updated folder handleSubmit:', updatedFolder);
+
             await axios.put(`http://localhost:5000/folders/${id}`, updatedFolder); // this line is not updating the favorite field to True
 
             console.log('Folder updated successfully');
@@ -83,7 +85,9 @@ export default function EditFolder() {
 
             // Update the folder object with the photo URLs
             const updatedFolder = { ...folder, photos: [...folder.photos, ...photoUrls] };
+            delete updatedFolder.__v;
 
+            console.log('Updated folder:', updatedFolder);
 
             // Send the updated folder object to the backend
             const addedFolder = await axios.put(`http://localhost:5000/folders/${id}`, updatedFolder);
@@ -165,7 +169,8 @@ export default function EditFolder() {
                 {loading ? (<p>Loading...</p>) : (
                     folder.photos.map(photo => (
                         <div key={photo._id} style={{ width: '25%', padding: '10px' }}>
-                            <EditPhotoCard folderId={id} photoId={photo._id} onDelete={handleDeletePhoto} />
+                            {photo}
+                            {/* <EditPhotoCard folderId={id} photoId={photo._id} onDelete={handleDeletePhoto} /> */}
                         </div>
                     ))
                 )}
