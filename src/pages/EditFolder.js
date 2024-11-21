@@ -9,7 +9,12 @@ export default function EditFolder() {
     const [folder, setFolder] = useState({});
     const [loading, setLoading] = useState(true);
     // This should eventually be an array of photos
-    const [newPhoto, setNewPhoto] = useState({ url: '', date: '' });
+    const [newPhotos, setNewPhotos] = useState([]);
+
+    const handleFileChange = (e) => {
+        const files = Array.from(e.target.files);
+        setNewPhotos(files);
+    };
 
     const fetchFolder = async () => {
         try {
@@ -21,6 +26,21 @@ export default function EditFolder() {
         }
         setLoading(false);
     }
+
+    const uploadPhotosToBackend = async (photos) => {
+        const formData = new FormData();
+        photos.forEach((photo, index) => {
+            formData.append(`photos[${index}]`, photo);
+        });
+
+        const response = await axios.post('http://localhost:5000/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return response.data.urls; // Assuming the backend returns an object with a `urls` array
+    };
 
     useEffect(() => {
         fetchFolder();
@@ -40,32 +60,25 @@ export default function EditFolder() {
         }
     }
 
-    const handleAddPhoto = async (e) => {
+    const handleAddPhotos = async (e) => {
         e.preventDefault();
         try {
-            if (!newPhoto.url || !newPhoto.date) {
-                console.error('Photo URL and date are required');
-                return;
-            }
+            // Upload photos to S3 and get the URLs
+            const photoUrls = await saveToS3(newPhotos, folder.title);
 
-            console.log(`photo to be added: ${newPhoto.url + newPhoto.date}`);
-            const newFolder = {
-                ...folder,
-                photos: [...folder.photos, newPhoto]
-            };
-            const response = await axios.put(`http://localhost:5000/folders/${id}`, newFolder);
-            if (response.status === 200) {
-                setFolder(newFolder);
-                setNewPhoto({ url: '', date: '' });
-                fetchFolder();
-            }
+            // Update the folder object with the photo URLs
+            const updatedFolder = { ...folder, photos: [...folder.photos, ...photoUrls] };
 
+            // Send the updated folder object to the backend
+            await axios.put(`http://localhost:5000/folders/${id}`, updatedFolder);
 
-            console.log('Photo added successfully');
+            // Update the folder state with the new photos
+            setFolder(updatedFolder);
+            setNewPhotos([]); // Clear the newPhotos state
         } catch (error) {
-            console.error(`Error adding photo: `, error);
+            console.error('Error adding photos:', error);
         }
-    }
+    };
 
 
     const handleDeletePhoto = (photoId) => {
@@ -115,7 +128,7 @@ export default function EditFolder() {
                     <button type="submit">Save</button>
                 </form>
 
-                <form onSubmit={handleAddPhoto} style={{ width: '30%' }}>
+                <form onSubmit={handleAddPhotos} style={{ width: '30%' }}>
                     <h3>Add Photo</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                         <label htmlFor="file">Choose a file:</label>
@@ -124,16 +137,8 @@ export default function EditFolder() {
                             id="file"
                             name="file"
                             accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                        setNewPhoto({ ...newPhoto, url: reader.result });
-                                    };
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
+                            multiple
+                            onChange={handleFileChange}
                             style={{ width: '30%' }}
                         />
                     </div>
