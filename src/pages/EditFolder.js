@@ -15,7 +15,7 @@ export default function EditFolder() {
         isFavorite: false,
         photos: [],
     });
-    const [photoUrls, setPhotoUrls] = useState([]);
+    const [photoUrlsTuples, setPhotoUrlsTuples] = useState([]);
     const [loading, setLoading] = useState(true);
     // This should eventually be an array of photos
     const [newPhotos, setNewPhotos] = useState([]);
@@ -38,7 +38,7 @@ export default function EditFolder() {
     const fetchPhotoUrls = async () => {
         try {
             const response = await axios.get(`http://localhost:5000/folders/${id}/photos`);
-            setPhotoUrls(response.data.photoUrls);
+            setPhotoUrlsTuples(response.data.photoUrlTuples);
         } catch (error) {
             console.error('Error fetching photos:', error);
         }
@@ -115,7 +115,7 @@ export default function EditFolder() {
     const handleDeletePhoto = (photoId) => {
         setFolder(prevFolder => ({
             ...prevFolder,
-            photos: prevFolder.photos.filter(photo => photo._id !== photoId)
+            photos: prevFolder.photos.filter(photo => photo !== photoId)
         }));
     }
 
@@ -178,9 +178,9 @@ export default function EditFolder() {
 
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {loading ? (<p>Loading...</p>) : (
-                    photoUrls.map(photoUrl => (
-                        <div key={photoUrl} style={{ width: '25%', padding: '10px' }}>
-                            <EditPhotoCard photoUrl={photoUrl} folderId={ } onDelete={handleDeletePhoto} />
+                    photoUrlsTuples.map(tuple => (
+                        <div key={tuple[0]} style={{ width: '25%', padding: '10px' }}>
+                            <EditPhotoCard signedPhotoUrl={tuple[1]} photoUrl={tuple[0]} folderId={id} onDelete={handleDeletePhoto} />
                         </div>
                     ))
                 )}

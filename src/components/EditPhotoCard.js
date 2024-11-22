@@ -5,7 +5,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { Button } from "react-bootstrap";
 
 
-export default function EditPhotoCard({ photoUrl, folderId, photoId, onDelete }) {
+export default function EditPhotoCard({ signedPhotoUrl, photoUrl, folderId, onDelete }) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [photo, setPhoto] = useState({});
@@ -63,17 +63,18 @@ export default function EditPhotoCard({ photoUrl, folderId, photoId, onDelete })
     // }
 
     const confirmDelete = async () => {
-        // Add your delete confirmation logic here
         try {
-            const response = await axios.delete(`http://localhost:5000/folders/${folderId}/photos/${photoId}`);
-            console.log(response.data);
+            // const photoName = photoUrl.split('/').pop();
+            const encodedUrl = encodeURIComponent(photoUrl);
+            const response = await axios.delete(`http://localhost:5000/folders/delete/${encodedUrl}`);
         } catch (error) {
             console.error('Error fetching photos in folder card:', error);
         }
 
         console.log('Delete confirmed');
         setShowModal(false);
-        onDelete(photoId);
+
+        onDelete(photoUrl);
     };
 
     const handleDeleteClick = () => {
@@ -100,7 +101,7 @@ export default function EditPhotoCard({ photoUrl, folderId, photoId, onDelete })
                     <Button onClick={() => handleDeleteClick()} variant="danger"><RiDeleteBin5Line /></Button>
                     <div style={imageContainerStyle}>
                         <img
-                            src={photoUrl}
+                            src={signedPhotoUrl}
                             style={imageStyle}
                         />
                     </div>
