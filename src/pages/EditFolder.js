@@ -66,7 +66,7 @@ export default function EditFolder() {
     useEffect(() => {
         fetchFolder();
         fetchPhotoUrls();
-    }, []);
+    }, [newPhotos]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -123,7 +123,7 @@ export default function EditFolder() {
         <div style={{ border: '1px solid black', padding: '20px', borderRadius: '5px' }}>
             <h2>{"Edit " + folder.title}</h2>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <form onSubmit={handleSubmit} style={{ width: '70%' }}>
+                <form onSubmit={handleSubmit} style={{ width: '50%' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                         <label htmlFor="title">Title:</label>
                         <input type="text" id="title" name="title" value={folder.title} onChange={(e) => setFolder({ ...folder, title: e.target.value })} style={{ width: '30%' }} />
@@ -151,15 +151,18 @@ export default function EditFolder() {
                             id="favorite"
                             name="favorite"
                             checked={folder.isFavorite || false}
-                            onChange={(e) => setFolder({ ...folder, isFavorite: e.target.checked })}
-                            style={{ width: '30%' }}
+
+                            onChange={(e) => {
+                                console.log('Checkbox checked:', e.target.checked); // Log the checked status
+                                setFolder({ ...folder, isFavorite: e.target.checked });
+                            }}
                         />
                     </div>
 
                     <button type="submit">Save</button>
                 </form>
 
-                <form onSubmit={handleAddPhotos} style={{ width: '30%' }}>
+                <form onSubmit={handleAddPhotos} style={{ width: '50%' }}>
                     <h3>Add Photo</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                         <input

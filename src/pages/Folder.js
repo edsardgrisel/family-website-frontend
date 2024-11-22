@@ -43,7 +43,7 @@ export default function Folder() {
     const fetchPhotoUrls = async () => {
         try {
             const response = await axios.get(`http://localhost:5000/folders/${id}/photos`);
-            setPhotoUrls(response.data.photoUrls);
+            setPhotoUrls(response.data.photoUrlTuples);
         } catch (error) {
             console.error('Error fetching photos:', error);
         }
@@ -91,12 +91,14 @@ export default function Folder() {
                     </h1>
                     <p>{folder.description}</p>
                     <div className="image-container">
-                        {photoUrls.map(image => (
+
+                        {photoUrls && photoUrls.map(tuple => (
+
                             <img
                                 onError={(e) => console.log(e)}
-                                key={image}
-                                src={image}
-                                alt={image}
+                                key={tuple[0]}
+                                src={tuple[1]}
+                                alt={tuple[0]}
                                 className="image-item" // Apply the CSS class
                             />
                         ))}
