@@ -11,7 +11,16 @@ import { Button } from 'react-bootstrap';
 
 export default function Folder() {
     const { id } = useParams();
-    const [folder, setFolder] = useState({});
+    const [folder, setFolder] = useState({
+        title: '',
+        location: '',
+        startDate: '',
+        endDate: '',
+        description: '',
+        isFavorite: false,
+        photos: [],
+    });
+    const [photoUrls, setPhotoUrls] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false); // Declare the state variables
 
@@ -30,6 +39,16 @@ export default function Folder() {
         }
         setLoading(false);
     }
+
+    const fetchPhotoUrls = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/folders/${id}/photos`);
+            setPhotoUrls(response.data.photoUrls);
+        } catch (error) {
+            console.error('Error fetching photos:', error);
+        }
+    }
+
 
     const confirmDelete = async () => {
         // Add your delete confirmation logic here
@@ -58,6 +77,7 @@ export default function Folder() {
 
     useEffect(() => {
         fetchFolder();
+        fetchPhotoUrls();
     }, []);
 
     return (
@@ -71,12 +91,12 @@ export default function Folder() {
                     </h1>
                     <p>{folder.description}</p>
                     <div className="image-container">
-                        {folder.photos.map(image => (
+                        {photoUrls.map(image => (
                             <img
                                 onError={(e) => console.log(e)}
-                                key={image.id}
-                                src={image.url}
-                                alt={image.url}
+                                key={image}
+                                src={image}
+                                alt={image}
                                 className="image-item" // Apply the CSS class
                             />
                         ))}

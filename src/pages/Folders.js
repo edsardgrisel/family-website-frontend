@@ -14,7 +14,6 @@ export default function Folders() {
         try {
             const response = await axios.get(`http://localhost:5000/folders/`);
             setFolders(response.data);
-            console.log(response.data);
         } catch (error) {
             console.error('Error fetching photos in folder card:', error);
         }
@@ -25,7 +24,6 @@ export default function Folders() {
         const uniqueYears = [...new Set(years)];
         const sortedYears = uniqueYears.sort((a, b) => b - a);
         setYears(sortedYears);
-        console.log(sortedYears);
     }
 
     useEffect(() => {

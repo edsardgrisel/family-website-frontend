@@ -5,7 +5,16 @@ import axios from "axios";
 export default function FolderCard({ folderId }) {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [folder, setFolder] = useState({});
+    const [folder, setFolder] = useState({
+        title: '',
+        location: '',
+        startDate: '',
+        endDate: '',
+        description: '',
+        isFavorite: false,
+        photos: [],
+    });
+    const [photoUrl, setPhotoUrl] = useState([]);
 
     const handleClick = () => {
         window.location.href = "/folders/" + folderId;
@@ -51,21 +60,29 @@ export default function FolderCard({ folderId }) {
 
     const fetchAndSetFolder = async () => {
         try {
-            console.log("folderId: " + folderId);
             const response = await axios.get(`http://localhost:5000/folders/${folderId}`);
             setFolder(response.data);
-            console.log(response.data);
         } catch (error) {
             console.error(`Error fetching photos in folder card ${folderId}:`, error);
         }
         setIsLoading(false);
     }
 
+    const fetchPhotoUrl = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/folders/${folderId}/photo`);
+            setPhotoUrl(response.data.photoUrl);
+        } catch (error) {
+            console.error('Error fetching photo URLs:', error);
+        }
+    };
+
 
 
     useEffect(() => {
         fetchAndSetFolder();
-    }, []);
+        fetchPhotoUrl();
+    }, [folderId]);
 
     return (
         <div
@@ -75,13 +92,13 @@ export default function FolderCard({ folderId }) {
             onMouseOver={(e) => e.currentTarget.style.transform = hoverStyle.transform}
             onMouseOut={(e) => e.currentTarget.style.transform = "none"}
         >
-            {isLoading || !folder ? <p>Loading...</p> :
+            {isLoading || !folder || !photoUrl ? <p>Loading...</p> :
                 <div>
                     <h6 style={{ wordWrap: "break-word", whiteSpace: "normal" }}>{folder.title}</h6>
-                    {folder.photos.length > 0 && (
+                    {photoUrl && (
                         <div style={imageContainerStyle}>
                             <img
-                                src={folder.photos[0].url}
+                                src={photoUrl}
                                 alt={folder.title}
                                 style={imageStyle}
                             />

@@ -15,6 +15,7 @@ export default function EditFolder() {
         isFavorite: false,
         photos: [],
     });
+    const [photoUrls, setPhotoUrls] = useState([]);
     const [loading, setLoading] = useState(true);
     // This should eventually be an array of photos
     const [newPhotos, setNewPhotos] = useState([]);
@@ -32,6 +33,15 @@ export default function EditFolder() {
             console.error('Error fetching photos:', error);
         }
         setLoading(false);
+    }
+
+    const fetchPhotoUrls = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/folders/${id}/photos`);
+            setPhotoUrls(response.data.photoUrls);
+        } catch (error) {
+            console.error('Error fetching photos:', error);
+        }
     }
 
     const uploadPhotosToBackend = async (files) => {
@@ -55,6 +65,7 @@ export default function EditFolder() {
 
     useEffect(() => {
         fetchFolder();
+        fetchPhotoUrls();
     }, []);
 
     const handleSubmit = async (e) => {
@@ -167,10 +178,9 @@ export default function EditFolder() {
 
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {loading ? (<p>Loading...</p>) : (
-                    folder.photos.map(photo => (
-                        <div key={photo._id} style={{ width: '25%', padding: '10px' }}>
-                            {photo}
-                            {/* <EditPhotoCard folderId={id} photoId={photo._id} onDelete={handleDeletePhoto} /> */}
+                    photoUrls.map(photoUrl => (
+                        <div key={photoUrl} style={{ width: '25%', padding: '10px' }}>
+                            <EditPhotoCard photoUrl={photoUrl} folderId={ } onDelete={handleDeletePhoto} />
                         </div>
                     ))
                 )}

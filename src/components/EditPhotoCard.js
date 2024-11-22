@@ -5,7 +5,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { Button } from "react-bootstrap";
 
 
-export default function EditPhotoCard({ folderId, photoId, onDelete }) {
+export default function EditPhotoCard({ photoUrl, folderId, photoId, onDelete }) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [photo, setPhoto] = useState({});
@@ -51,16 +51,16 @@ export default function EditPhotoCard({ folderId, photoId, onDelete }) {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow to highlight
     };
 
-    const fetchAndSetPhoto = async () => {
-        try {
-            const response = await axios.get(`http://localhost:5000/folders/${folderId}/photos/${photoId}`);
-            setPhoto(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.error(`Error fetching photos in folder card. FolderId: ${folderId}. PhotoId ${photoId}`, error);
-        }
-        setIsLoading(false);
-    }
+    // const fetchAndSetPhoto = async () => {
+    //     try {
+    //         const response = await axios.get(`http://localhost:5000/folders/${folderId}/photos/${photoId}`);
+    //         setPhoto(response.data);
+    //         console.log(response.data);
+    //     } catch (error) {
+    //         console.error(`Error fetching photos in folder card. FolderId: ${folderId}. PhotoId ${photoId}`, error);
+    //     }
+    //     setIsLoading(false);
+    // }
 
     const confirmDelete = async () => {
         // Add your delete confirmation logic here
@@ -84,9 +84,9 @@ export default function EditPhotoCard({ folderId, photoId, onDelete }) {
         setShowModal(false);
     };
 
-    useEffect(() => {
-        fetchAndSetPhoto();
-    }, []);
+    // useEffect(() => {
+    //     fetchAndSetPhoto();
+    // }, []);
 
     return (
         <div
@@ -95,12 +95,12 @@ export default function EditPhotoCard({ folderId, photoId, onDelete }) {
             onMouseOver={(e) => e.currentTarget.style.transform = hoverStyle.transform}
             onMouseOut={(e) => e.currentTarget.style.transform = "none"}
         >
-            {isLoading || !photo ? <p>Loading...</p> :
+            {!photoUrl ? <p>Loading...</p> :
                 <div>
                     <Button onClick={() => handleDeleteClick()} variant="danger"><RiDeleteBin5Line /></Button>
                     <div style={imageContainerStyle}>
                         <img
-                            src={photo.url}
+                            src={photoUrl}
                             style={imageStyle}
                         />
                     </div>
