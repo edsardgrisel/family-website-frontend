@@ -52,6 +52,30 @@ export default function Folder() {
 
     const confirmDelete = async () => {
         // Add your delete confirmation logic here
+
+        // get list of photos in folder
+        // delete each photo
+
+        try {
+            const response = await axios.get(`http://localhost:5000/folders/${id}`);
+            console.log(response.data);
+            const photoUrls = response.data.folder.photos;
+            console.log(photoUrls);
+            for (let i = 0; i < photoUrls.length; i++) {
+                console.log(photoUrls[i][0]);
+                try {
+                    const photoName = photoUrls[i][0].split('/').pop();
+                    const response = await axios.delete(`http://localhost:5000/folders/${id}/photos/${photoName}`);
+                    console.log(response.data);
+                } catch (error) {
+                    console.error('Error fetching photos in folder card:', error);
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching photos in folder card:', error);
+        }
+
+
         try {
             const response = await axios.delete(`http://localhost:5000/folders/${id}`);
             console.log(response.data);
@@ -63,6 +87,7 @@ export default function Folder() {
         setShowModal(false);
         window.location.href = '/folders';
     };
+
 
     const handleDeleteClick = () => {
         setShowModal(true);

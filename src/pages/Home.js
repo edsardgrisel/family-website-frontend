@@ -9,16 +9,30 @@ import '../styles/FoldersPage.css';
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [home, setHome] = useState({});
+  const [homePhotoUrl, setHomePhotoUrl] = useState('');
   const [favoriteFolders, setFavoriteFolders] = useState([]);
 
   const fetchAndSetHome = async () => {
+    var url = '';
     try {
       const response = await axios.get(`http://localhost:5000/folders/home`);
       setHome(response.data);
       console.log(response.data);
+      url = response.data.photoUrl;
     } catch (error) {
-      console.error('Error fetching photos:', error);
+      console.error('Error fetching photos from mongodb:', error);
     }
+
+    try {
+      // console.log(home);
+      const photoName = url.split('/').pop();
+      const response = await axios.get(`http://localhost:5000/folders/photo/${photoName}`);
+
+      setHomePhotoUrl(response.data.signedPhotoUrl);
+    } catch (error) {
+      console.error('Error fetching photos from s3:', error);
+    }
+
     setIsLoading(false);
   }
 
@@ -57,7 +71,7 @@ export default function Home() {
       {isLoading ? <p>Loading...</p> :
         <div>
           <div style={{ flex: 1 }}>
-            <img src={home.photoUrl} alt={home.photoUrl} style={{ width: '100%', height: '100%' }} />
+            <img src={homePhotoUrl} alt={homePhotoUrl} style={{ width: '100%', height: '100%' }} />
           </div>
           <div>
 

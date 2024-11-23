@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import EditPhotoCard from '../components/EditPhotoCard';
+import { set } from 'mongoose';
 
 export default function EditFolder() {
     const { id } = useParams();
@@ -66,7 +67,7 @@ export default function EditFolder() {
     useEffect(() => {
         fetchFolder();
         fetchPhotoUrls();
-    }, [newPhotos]);
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -106,6 +107,7 @@ export default function EditFolder() {
             // Update the folder state with the new photos
             setFolder(addedFolder);
             setNewPhotos([]); // Clear the newPhotos state
+            fetchPhotoUrls();
         } catch (error) {
             console.error('Error adding photos:', error);
         }
@@ -117,6 +119,7 @@ export default function EditFolder() {
             ...prevFolder,
             photos: prevFolder.photos.filter(photo => photo !== photoId)
         }));
+        setPhotoUrlsTuples(prevTuples => prevTuples.filter(tuple => tuple[0] !== photoId));
     }
 
     return (

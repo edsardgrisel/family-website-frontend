@@ -8,6 +8,7 @@ import Folders from './pages/Folders';
 import Folder from './pages/Folder';
 import EditFolder from './pages/EditFolder';
 import AddFolder from "./pages/AddFolder";
+import SetHomePhoto from "./pages/SetHomePhoto";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -80,6 +81,14 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <AddFolder />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/set-home-photo"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <SetHomePhoto />
             </ProtectedRoute>
           }
         />

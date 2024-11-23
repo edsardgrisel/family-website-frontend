@@ -24,6 +24,9 @@ const Navbar = ({ handleLogout }) => {
                     <Link to="/add-folder" style={{ textDecoration: 'none', color: 'black' }}>Add Folder</Link>
                 </li>
                 <li>
+                    <Link to="/set-home-photo" style={{ textDecoration: 'none', color: 'black' }}>Set Home Photo</Link>
+                </li>
+                <li>
                     <Button onClick={handleLogout}>Log Out</Button>
                 </li>
             </ul>
