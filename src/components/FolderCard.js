@@ -92,7 +92,7 @@ export default function FolderCard({ folderId }) {
             onMouseOver={(e) => e.currentTarget.style.transform = hoverStyle.transform}
             onMouseOut={(e) => e.currentTarget.style.transform = "none"}
         >
-            {isLoading || !folder || !photoUrl ? <p>Loading...</p> :
+            {isLoading || !folder ? <p>Loading...</p> :
                 <div>
                     <h6 style={{ wordWrap: "break-word", whiteSpace: "normal" }}>{folder.title}</h6>
                     {photoUrl && (
