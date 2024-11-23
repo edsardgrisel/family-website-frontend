@@ -12,7 +12,7 @@ export default function Folders() {
 
     const fetchAndSetFolders = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/folders/`);
+            const response = await axios.get(`${process.env.SERVER_URL}/folders/`);
             setFolders(response.data);
         } catch (error) {
             console.error('Error fetching photos in folder card:', error);

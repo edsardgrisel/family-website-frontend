@@ -23,12 +23,12 @@ export default function AddFolder() {
         e.preventDefault();
         try {
             const updatedFolder = { ...folder, isFavorite: folder.isFavorite || false };
-            const response = await axios.post(`http://localhost:5000/folders/`, updatedFolder); // this line is not updating the favorite field to True
+            const response = await axios.post(`${process.env.SERVER_URL}/folders/`, updatedFolder); // this line is not updating the favorite field to True
 
             console.log('Folder updated successfully');
             console.log(response.data);
             if (response.data._id) {
-                window.location.href = `http://localhost:3000/edit/${response.data._id}`;
+                window.location.href = `/edit/${response.data._id}`;
             }
         } catch (error) {
             console.error('Error updating folder:', error);

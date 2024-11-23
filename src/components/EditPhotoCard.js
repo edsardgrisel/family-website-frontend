@@ -53,7 +53,7 @@ export default function EditPhotoCard({ signedPhotoUrl, photoUrl, folderId, onDe
 
     // const fetchAndSetPhoto = async () => {
     //     try {
-    //         const response = await axios.get(`http://localhost:5000/folders/${folderId}/photos/${photoId}`);
+    //         const response = await axios.get(`${process.env.SERVER_URL}/folders/${folderId}/photos/${photoId}`);
     //         setPhoto(response.data);
     //         console.log(response.data);
     //     } catch (error) {
@@ -67,7 +67,7 @@ export default function EditPhotoCard({ signedPhotoUrl, photoUrl, folderId, onDe
         try {
 
             // const encodedUrl = encodeURIComponent(photoUrl);
-            const response = await axios.delete(`http://localhost:5000/folders/delete/${photoName}`);
+            const response = await axios.delete(`${process.env.SERVER_URL}/folders/delete/${photoName}`);
         } catch (error) {
             console.error('Error fetching photos in folder card:', error);
         }
@@ -75,7 +75,7 @@ export default function EditPhotoCard({ signedPhotoUrl, photoUrl, folderId, onDe
         console.log('Delete confirmed on s3');
 
         try {
-            const response = await axios.delete(`http://localhost:5000/folders/${folderId}/photos/${photoName}`);
+            const response = await axios.delete(`${process.env.SERVER_URL}/folders/${folderId}/photos/${photoName}`);
             console.log(response.data);
         } catch (error) {
             console.error('Error deleting photos in folder card:', error);

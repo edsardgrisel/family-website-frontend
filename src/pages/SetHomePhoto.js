@@ -22,7 +22,7 @@ export default function SetHomePhoto() {
         // get current home photo
         let currentPhotoUrl = '';
         try {
-            const response = await axios.get('http://localhost:5000/folders/home');
+            const response = await axios.get(`${process.env.SERVER_URL}/folders/home`);
             currentPhotoUrl = response.data.photoUrl;
         } catch (error) {
             console.error('Error fetching home photo:', error);
@@ -31,14 +31,14 @@ export default function SetHomePhoto() {
         // delete current home photo
         try {
             const photoName = currentPhotoUrl.split('/').pop();
-            const response = await axios.delete(`http://localhost:5000/folders/delete/${photoName}`);
+            const response = await axios.delete(`${process.env.SERVER_URL}/folders/delete/${photoName}`);
             console.log('Deleted home photo:', response.data);
         } catch (error) {
             console.error('Error deleting home photo:', error);
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/folders/upload', formData, {
+            const response = await axios.post(`${process.env.SERVER_URL}/folders/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -49,7 +49,7 @@ export default function SetHomePhoto() {
         }
 
         try {
-            const response = await axios.put('http://localhost:5000/folders/home', {
+            const response = await axios.put(`${process.env.SERVER_URL}/folders/home`, {
                 photoUrl: photoUrl
             });
             console.log('Set home photo:', response.data);
