@@ -60,7 +60,7 @@ export default function FolderCard({ folderId }) {
 
     const fetchAndSetFolder = async () => {
         try {
-            const response = await axios.get(`${process.env.SERVER_URL}/folders/${folderId}`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/${folderId}`);
             setFolder(response.data);
         } catch (error) {
             console.error(`Error fetching photos in folder card ${folderId}:`, error);
@@ -70,7 +70,7 @@ export default function FolderCard({ folderId }) {
 
     const fetchPhotoUrl = async () => {
         try {
-            const response = await axios.get(`${process.env.SERVER_URL}/folders/${folderId}/photo`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/${folderId}/photo`);
             setPhotoUrl(response.data.photoUrl);
         } catch (error) {
             console.error('Error fetching photo URLs:', error);

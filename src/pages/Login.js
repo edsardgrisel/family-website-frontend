@@ -8,7 +8,7 @@ const Login = ({ onLogin }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${process.env.SERVER_URL}/auth/verifyPassword`, { password });
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/verifyPassword`, { password });
       if (response.data.success) {
         onLogin();
       } else {

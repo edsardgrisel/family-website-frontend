@@ -15,7 +15,7 @@ export default function Home() {
   const fetchAndSetHome = async () => {
     var url = '';
     try {
-      const response = await axios.get(`${process.env.SERVER_URL}/folders/home`);
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/home`);
       setHome(response.data);
       console.log(response.data);
       url = response.data.photoUrl;
@@ -26,7 +26,7 @@ export default function Home() {
     try {
       // console.log(home);
       const photoName = url.split('/').pop();
-      const response = await axios.get(`${process.env.SERVER_URL}/folders/photo/${photoName}`);
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/photo/${photoName}`);
 
       setHomePhotoUrl(response.data.signedPhotoUrl);
     } catch (error) {
@@ -38,7 +38,7 @@ export default function Home() {
 
   const fetchFavorites = async () => {
     try {
-      const response = await axios.get(`${process.env.SERVER_URL}/folders`);
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders`);
       const favoriteFolders = response.data.filter(folder => folder.isFavorite);
       setFavoriteFolders(favoriteFolders);
     }
@@ -139,7 +139,7 @@ export default function Home() {
 
 // function fetchImage() {
 //   try {
-//     const response = await axios.get(`${process.env.SERVER_URL}/folders/${tempId}`);
+//     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/${tempId}`);
 //     setFolder(response.data);
 //     console.log(response.data);
 //   } catch (error) {

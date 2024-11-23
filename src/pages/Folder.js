@@ -32,7 +32,7 @@ export default function Folder() {
 
     const fetchFolder = async () => {
         try {
-            const response = await axios.get(`${process.env.SERVER_URL}/folders/${id}`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`);
             setFolder(response.data);
         } catch (error) {
             console.error('Error fetching photos:', error);
@@ -42,7 +42,7 @@ export default function Folder() {
 
     const fetchPhotoUrls = async () => {
         try {
-            const response = await axios.get(`${process.env.SERVER_URL}/folders/${id}/photos`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/${id}/photos`);
             setPhotoUrls(response.data.photoUrlTuples);
         } catch (error) {
             console.error('Error fetching photos:', error);
@@ -54,7 +54,7 @@ export default function Folder() {
         var photoUrls = [];
         // Get list of photos from folder
         try {
-            const response = await axios.get(`${process.env.SERVER_URL}/folders/${id}`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`);
             photoUrls = response.data.photos;
         } catch (error) {
             console.error('Error fetching photos from mongodb folder:', error);
@@ -65,7 +65,7 @@ export default function Folder() {
             for (const photo of photoUrls) {
                 const photoName = photo.split('/').pop();
                 try {
-                    const response = await axios.delete(`${process.env.SERVER_URL}/folders/delete/${photoName}`);
+                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/folders/delete/${photoName}`);
                     console.log(response.data);
                 } catch (error) {
                     console.error('Error deleting photo from S3:', error);
@@ -77,7 +77,7 @@ export default function Folder() {
 
         // Delete folder from mongodb
         try {
-            const response = await axios.delete(`${process.env.SERVER_URL}/folders/${id}`);
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`);
             console.log(response.data);
         } catch (error) {
             console.error('Error deleting folder from mongodb', error);

@@ -29,7 +29,7 @@ export default function EditFolder() {
 
     const fetchFolder = async () => {
         try {
-            const response = await axios.get(`${process.env.SERVER_URL}/folders/${id}`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`);
             setFolder(response.data);
         } catch (error) {
             console.error('Error fetching photos:', error);
@@ -39,7 +39,7 @@ export default function EditFolder() {
 
     const fetchPhotoUrls = async () => {
         try {
-            const response = await axios.get(`${process.env.SERVER_URL}/folders/${id}/photos`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/folders/${id}/photos`);
             setPhotoUrlsTuples(response.data.photoUrlTuples);
         } catch (error) {
             console.error('Error fetching photos:', error);
@@ -55,7 +55,7 @@ export default function EditFolder() {
         }
 
         try {
-            const response = await axios.post(`${process.env.SERVER_URL}/folders/upload`, formData, {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/folders/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -79,7 +79,7 @@ export default function EditFolder() {
 
             console.log('Updated folder handleSubmit:', updatedFolder);
 
-            await axios.put(`${process.env.SERVER_URL}/folders/${id}`, updatedFolder); // this line is not updating the favorite field to True
+            await axios.put(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`, updatedFolder); // this line is not updating the favorite field to True
 
             console.log('Folder updated successfully');
         } catch (error) {
@@ -105,7 +105,7 @@ export default function EditFolder() {
             console.log('Updated folder:', updatedFolder);
 
             // Send the updated folder object to the backend
-            const addedFolder = await axios.put(`${process.env.SERVER_URL}/folders/${id}`, updatedFolder);
+            const addedFolder = await axios.put(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`, updatedFolder);
 
             // Update the folder state with the new photos
             setFolder(addedFolder);
