@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import EditPhotoCard from '../components/EditPhotoCard';
@@ -7,6 +7,7 @@ import { set } from 'mongoose';
 
 export default function EditFolder() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [folder, setFolder] = useState({
         title: '',
         location: '',
@@ -48,7 +49,9 @@ export default function EditFolder() {
     const uploadPhotosToBackend = async (files) => {
         const formData = new FormData();
         for (let file of files) {
-            formData.append('photos', file);
+            const newFileName = file.name.replace(/\s+/g, '-');
+            const newFile = new File([file], newFileName, { type: file.type });
+            formData.append('photos', newFile);
         }
 
         try {
@@ -124,7 +127,8 @@ export default function EditFolder() {
 
     return (
         <div style={{ border: '1px solid black', padding: '20px', borderRadius: '5px' }}>
-            <h2>{"Edit " + folder.title}</h2>
+            <h2>{`Edit Folder`}</h2>
+            <button onClick={() => navigate(`/folders/${id}`)}>Back to Folder</button>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <form onSubmit={handleSubmit} style={{ width: '50%' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
@@ -166,7 +170,8 @@ export default function EditFolder() {
                 </form>
 
                 <form onSubmit={handleAddPhotos} style={{ width: '50%' }}>
-                    <h3>Add Photo</h3>
+                    <h3>Add Photos</h3>
+                    <p>You can select multiple photos by holding ctrl while clicking the files.</p>
                     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                         <input
                             type="file"
@@ -175,7 +180,6 @@ export default function EditFolder() {
                             accept="image/*"
                             multiple
                             onChange={handlePhotoChange}
-                            style={{ width: '30%' }}
                         />
                     </div>
                     <button type="submit">Save</button>

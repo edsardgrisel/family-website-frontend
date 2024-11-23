@@ -56,6 +56,7 @@ export default function Folders() {
                     </div>
                 ))
             }
+            {folders.length === 0 && <p>No folders found.</p>}
         </div>
     );
 }

@@ -84,6 +84,7 @@ export default function Home() {
                       {favoriteFolders.map(folder => (
                         <FolderCard className="scrollable-item" folderId={folder._id} key={folder._id} />
                       ))}
+                      {favoriteFolders.length === 0 && <p>No favorite folders found.</p>}
                     </div>
                   </div>
                 </div>

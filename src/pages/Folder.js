@@ -51,36 +51,36 @@ export default function Folder() {
 
 
     const confirmDelete = async () => {
-        // Add your delete confirmation logic here
-
-        // get list of photos in folder
-        // delete each photo
-
+        var photoUrls = [];
+        // Get list of photos from folder
         try {
             const response = await axios.get(`http://localhost:5000/folders/${id}`);
-            console.log(response.data);
-            const photoUrls = response.data.folder.photos;
-            console.log(photoUrls);
-            for (let i = 0; i < photoUrls.length; i++) {
-                console.log(photoUrls[i][0]);
+            photoUrls = response.data.photos;
+        } catch (error) {
+            console.error('Error fetching photos from mongodb folder:', error);
+        }
+        console.log(photoUrls);
+        // Delete photos from s3
+        try {
+            for (const photo of photoUrls) {
+                const photoName = photo.split('/').pop();
                 try {
-                    const photoName = photoUrls[i][0].split('/').pop();
-                    const response = await axios.delete(`http://localhost:5000/folders/${id}/photos/${photoName}`);
+                    const response = await axios.delete(`http://localhost:5000/folders/delete/${photoName}`);
                     console.log(response.data);
                 } catch (error) {
-                    console.error('Error fetching photos in folder card:', error);
+                    console.error('Error deleting photo from S3:', error);
                 }
             }
         } catch (error) {
-            console.error('Error fetching photos in folder card:', error);
+            console.error('Error deleting photos in S3:', error);
         }
 
-
+        // Delete folder from mongodb
         try {
             const response = await axios.delete(`http://localhost:5000/folders/${id}`);
             console.log(response.data);
         } catch (error) {
-            console.error('Error fetching photos in folder card:', error);
+            console.error('Error deleting folder from mongodb', error);
         }
 
         console.log('Delete confirmed');
