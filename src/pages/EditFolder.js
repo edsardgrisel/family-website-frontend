@@ -3,8 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import EditPhotoCard from '../components/EditPhotoCard';
-import { set } from 'mongoose';
-import { response } from 'express';
 
 export default function EditFolder() {
     const { id } = useParams();
