@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import EditPhotoCard from '../components/EditPhotoCard';
 import { set } from 'mongoose';
+import { response } from 'express';
 
 export default function EditFolder() {
     const { id } = useParams();
@@ -70,7 +71,7 @@ export default function EditFolder() {
     useEffect(() => {
         fetchFolder();
         fetchPhotoUrls();
-    }, []);
+    }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -105,11 +106,11 @@ export default function EditFolder() {
             console.log('Updated folder:', updatedFolder);
 
             // Send the updated folder object to the backend
-            const addedFolder = await axios.put(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`, updatedFolder);
+            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`, updatedFolder);
 
             // Update the folder state with the new photos
             fetchPhotoUrls();
-            setFolder(addedFolder);
+            setFolder(response.data);
             setNewPhotos([]); // Clear the newPhotos state
 
         } catch (error) {
