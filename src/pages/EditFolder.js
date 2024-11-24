@@ -108,9 +108,10 @@ export default function EditFolder() {
             const addedFolder = await axios.put(`${process.env.REACT_APP_SERVER_URL}/folders/${id}`, updatedFolder);
 
             // Update the folder state with the new photos
+            fetchPhotoUrls();
             setFolder(addedFolder);
             setNewPhotos([]); // Clear the newPhotos state
-            fetchPhotoUrls();
+
         } catch (error) {
             console.error('Error adding photos:', error);
         }
