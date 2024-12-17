@@ -1,12 +1,10 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap'; // Import Button from react-bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 const Navbar = ({ handleLogout }) => {
-
+    const userName = localStorage.getItem('userName');
 
     return (
         <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'lightgray', padding: '1rem' }}>
@@ -30,9 +28,10 @@ const Navbar = ({ handleLogout }) => {
                     <Link to="/calendar" style={{ textDecoration: 'none', color: 'black' }}>Calendar</Link>
                 </li>
                 <li>
-                    <Button onClick={handleLogout}>Log Out</Button>
+                    <Button onClick={handleLogout}>
+                        {userName ? `Log Out of ${userName}` : 'Log Out'}
+                    </Button>
                 </li>
-
             </ul>
         </nav>
     );

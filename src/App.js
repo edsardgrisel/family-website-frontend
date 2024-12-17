@@ -10,6 +10,7 @@ import EditFolder from './pages/EditFolder';
 import AddFolder from "./pages/AddFolder";
 import SetHomePhoto from "./pages/SetHomePhoto";
 import CalendarPage from "./pages/CalendarPage";
+import PhotoPage from "./pages/PhotoPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -99,6 +100,15 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <CalendarPage />
+            </ProtectedRoute>
+          }
+
+        />
+        <Route
+          path="/folders/:folderId/:photoId"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <PhotoPage />
             </ProtectedRoute>
           }
 
