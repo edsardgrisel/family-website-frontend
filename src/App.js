@@ -11,6 +11,7 @@ import AddFolder from "./pages/AddFolder";
 import SetHomePhoto from "./pages/SetHomePhoto";
 import CalendarPage from "./pages/CalendarPage";
 import PhotoPage from "./pages/PhotoPage";
+import Chat from './pages/Chat';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -111,6 +112,14 @@ function App() {
               <PhotoPage />
             </ProtectedRoute>
           }
+
+        />
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Chat />
+            </ProtectedRoute>}
 
         />
       </Routes>

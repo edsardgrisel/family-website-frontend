@@ -28,6 +28,9 @@ const Navbar = ({ handleLogout }) => {
                     <Link to="/calendar" style={{ textDecoration: 'none', color: 'black' }}>Calendar</Link>
                 </li>
                 <li>
+                    <Link to="/chat" style={{ textDecoration: 'none', color: 'black' }}>Chat</Link>
+                </li>
+                <li>
                     <Button onClick={handleLogout}>
                         {userName ? `Log Out of ${userName}` : 'Log Out'}
                     </Button>
