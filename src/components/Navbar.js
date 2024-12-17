@@ -27,8 +27,12 @@ const Navbar = ({ handleLogout }) => {
                     <Link to="/set-home-photo" style={{ textDecoration: 'none', color: 'black' }}>Set Home Photo</Link>
                 </li>
                 <li>
+                    <Link to="/calendar" style={{ textDecoration: 'none', color: 'black' }}>Calendar</Link>
+                </li>
+                <li>
                     <Button onClick={handleLogout}>Log Out</Button>
                 </li>
+
             </ul>
         </nav>
     );

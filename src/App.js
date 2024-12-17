@@ -9,6 +9,7 @@ import Folder from './pages/Folder';
 import EditFolder from './pages/EditFolder';
 import AddFolder from "./pages/AddFolder";
 import SetHomePhoto from "./pages/SetHomePhoto";
+import CalendarPage from "./pages/CalendarPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -91,6 +92,16 @@ function App() {
               <SetHomePhoto />
             </ProtectedRoute>
           }
+
+        />
+        <Route
+          path="/calendar"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <CalendarPage />
+            </ProtectedRoute>
+          }
+
         />
       </Routes>
     </Router>
