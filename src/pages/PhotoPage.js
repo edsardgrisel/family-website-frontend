@@ -23,7 +23,9 @@ const PhotoPage = () => {
         fetchComments();
     }, [folderId, photoId]);
 
-    const handleAddComment = async () => {
+    const handleAddComment = async (e) => {
+        e.preventDefault(); // Prevent the default form submission behavior
+
         const userName = localStorage.getItem('userName');
         if (!userName) {
             alert('You must be logged in to comment');
@@ -41,32 +43,38 @@ const PhotoPage = () => {
         }
     };
 
-    // Sort comments by time (earliest at the top)
-    const sortedComments = comments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleAddComment(e);
+        }
+    };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-            <div style={{ flex: '0 1 50%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50%' }}>
-                <img src={photoUrl} alt="Photo" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-            </div>
-            <div style={{ flex: '1 1 50%', overflowY: 'auto' }}>
-                <h5>Comments</h5>
-                {sortedComments.map((c, index) => (
-                    <div key={index} style={{ backgroundColor: 'white', padding: '10px', borderRadius: '10px', margin: '5px 0', border: '1px solid black', width: 'auto' }}>
-                        <strong>{c.user}:</strong> {c.message}
-                    </div>
-                ))}
-                <Form>
-                    <Form.Group controlId="comment">
-                        <Form.Label>Add a comment</Form.Label>
+        <div>
+            <h2>Photo</h2>
+            <img src={photoUrl} alt="Photo" />
+            <div>
+                <h3>Comments</h3>
+                <ul>
+                    {comments.map((comment, index) => (
+                        <li key={index}>
+                            <strong>{comment.user}</strong>: {comment.message}
+                        </li>
+                    ))}
+                </ul>
+                <Form onSubmit={handleAddComment}>
+                    <Form.Group controlId="newComment">
+                        <Form.Label>New Comment</Form.Label>
                         <Form.Control
                             type="text"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
+                            placeholder="Enter your comment"
+                            onKeyPress={handleKeyPress}
                         />
                     </Form.Group>
-                    <Button variant="primary" onClick={handleAddComment}>
-                        Add Comment
+                    <Button variant="primary" type="submit">
+                        Send
                     </Button>
                 </Form>
             </div>

@@ -30,7 +30,9 @@ const Chat = () => {
         }
     }, [messages]);
 
-    const handleSendMessage = async () => {
+    const handleSendMessage = async (e) => {
+        e.preventDefault(); // Prevent the default form submission behavior
+
         if (!userName) {
             alert('You must be logged in to send a message');
             return;
@@ -44,6 +46,12 @@ const Chat = () => {
             setNewMessage('');
         } catch (error) {
             console.error('Error sending message:', error);
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSendMessage(e);
         }
     };
 
@@ -67,7 +75,7 @@ const Chat = () => {
                     ))}
                 </div>
             </div>
-            <Form>
+            <Form onSubmit={handleSendMessage}>
                 <Form.Group controlId="newMessage">
                     <Form.Label>New Message</Form.Label>
                     <Form.Control
@@ -75,9 +83,10 @@ const Chat = () => {
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
                         placeholder="Enter your message"
+                        onKeyPress={handleKeyPress}
                     />
                 </Form.Group>
-                <Button variant="primary" onClick={handleSendMessage}>
+                <Button variant="primary" type="submit">
                     Send
                 </Button>
             </Form>
