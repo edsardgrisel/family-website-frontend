@@ -1,4 +1,3 @@
 Run frontend: `npm start`
 
-
-ToDo: make a component for folder card for the list in Folders.js
+TODO: I must ensure that dates are stored properly in the db. so change data type in model to date and verify if correct. Then I dont have to validate on the frontend
