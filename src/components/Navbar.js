@@ -1,43 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap'; // Import Button from react-bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import '../styles/Navbar.css';
 
-const Navbar = ({ handleLogout }) => {
-    const userName = localStorage.getItem('userName');
+export default function Navbar({ userName, handleLogout }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    return (
-        <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'lightgray', padding: '1rem' }}>
-            <div>
-                <h1>Grisel Family</h1>
-            </div>
-            <ul style={{ display: 'flex', listStyle: 'none', justifyContent: 'flex-end', gap: '2rem', alignItems: 'center' }}>
-                <li>
-                    <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
-                </li>
-                <li>
-                    <Link to="/folders" style={{ textDecoration: 'none', color: 'black' }}>Folders</Link>
-                </li>
-                <li>
-                    <Link to="/add-folder" style={{ textDecoration: 'none', color: 'black' }}>Add Folder</Link>
-                </li>
-                <li>
-                    <Link to="/set-home-photo" style={{ textDecoration: 'none', color: 'black' }}>Set Home Photo</Link>
-                </li>
-                <li>
-                    <Link to="/calendar" style={{ textDecoration: 'none', color: 'black' }}>Calendar</Link>
-                </li>
-                <li>
-                    <Link to="/chat" style={{ textDecoration: 'none', color: 'black' }}>Chat</Link>
-                </li>
-                <li>
-                    <Button onClick={handleLogout}>
-                        {userName ? `Log Out of ${userName}` : 'Log Out'}
-                    </Button>
-                </li>
-            </ul>
-        </nav>
-    );
-};
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
-export default Navbar;
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  return (
+    <nav className="navbar">
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <button className="menu-toggle" onClick={toggleMobileMenu}>
+          &#9776;
+        </button>
+      </div>
+      <ul className={isMobileMenuOpen ? 'open' : ''}>
+        <li>
+          <Link to="/" style={{ textDecoration: 'none', color: 'black' }} onClick={closeMobileMenu}>Home</Link>
+        </li>
+        <li>
+          <Link to="/folders" style={{ textDecoration: 'none', color: 'black' }} onClick={closeMobileMenu}>Folders</Link>
+        </li>
+        <li>
+          <Link to="/add-folder" style={{ textDecoration: 'none', color: 'black' }} onClick={closeMobileMenu}>Add Folder</Link>
+        </li>
+        <li>
+          <Link to="/set-home-photo" style={{ textDecoration: 'none', color: 'black' }} onClick={closeMobileMenu}>Set Home Photo</Link>
+        </li>
+        <li>
+          <Link to="/calendar" style={{ textDecoration: 'none', color: 'black' }} onClick={closeMobileMenu}>Calendar</Link>
+        </li>
+        <li>
+          <Link to="/chat" style={{ textDecoration: 'none', color: 'black' }} onClick={closeMobileMenu}>Chat</Link>
+        </li>
+        <li>
+          <button onClick={() => { handleLogout(); closeMobileMenu(); }} style={{ textDecoration: 'none', color: 'black', background: 'none', border: 'none', cursor: 'pointer' }}>
+            {userName ? `Log Out of ${userName}` : 'Log Out'}
+          </button>
+        </li>
+      </ul>
+    </nav>
+  );
+}
