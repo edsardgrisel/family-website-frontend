@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import FolderCard from '../components/FolderCard';
 import axios from 'axios';
-import '../styles/FoldersPage.css';
+import '../styles/Home.css';
 
 
 

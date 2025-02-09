@@ -1,0 +1,36 @@
+/* filepath: /Users/edsardgrisel/Documents/Programming/web-apps/family-website/family-website-frontend/src/styles/Home.css */
+
+.home-container {
+    width: 100%;
+    padding: 0 10px;
+}
+
+.home-header {
+    font-size: 24px;
+    text-align: center;
+}
+
+.home-main-content {
+    font-size: 16px;
+}
+
+.home-footer {
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Styles for phones */
+@media (max-width: 600px) {
+    .home-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home-header, .home-footer {
+        padding: 5px;
+    }
+
+    .home-main-content {
+        padding: 10px;
+    }
+}
