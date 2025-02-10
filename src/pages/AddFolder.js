@@ -17,10 +17,17 @@ export default function AddFolder() {
     });
     const [loading, setLoading] = useState(true);
 
-
+    const isValidDate = (dateString) => {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+        return regex.test(dateString);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!isValidDate(folder.startDate) || !isValidDate(folder.endDate)) {
+            alert('Please enter dates in the format yyyy-mm-dd');
+            return;
+        }
         try {
             const updatedFolder = { ...folder, isFavorite: folder.isFavorite || false };
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/folders/`, updatedFolder); // this line is not updating the favorite field to True
